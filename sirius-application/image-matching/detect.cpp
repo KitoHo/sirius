@@ -56,7 +56,7 @@ string make_pbdesc(string img_name) {
 }
 
 vector<KeyPoint> exec_feature_gpu(const Mat &img_in,
-                                  const string detector_str) {
+                                  const string &detector_str) {
   vector<KeyPoint> keypoints;
   gpu::GpuMat img;
   img.upload(img_in);  // Only 8B grayscale
@@ -117,7 +117,7 @@ void exec_text(po::variables_map &vm) {
   tess->End();
 }
 
-Mat exec_desc_gpu(const Mat &img_in, const string extractor_str,
+Mat exec_desc_gpu(const Mat &img_in, const string &extractor_str,
                   vector<KeyPoint> keypoints) {
   gpu::GpuMat img;
   img.upload(img_in);  // Only 8B grayscale
@@ -173,7 +173,7 @@ void exec_match(po::variables_map &vm) {
   unsigned int runtimesearch = 0;
   unsigned int totaltime = 0;
   struct timeval tot1, tot2;
-  int numimgs = 0;
+  // int numimgs = 0;
 
   gettimeofday(&tot1, NULL);
   // classes
@@ -320,6 +320,9 @@ void build_db(po::variables_map &vm) {
   fs::directory_iterator end_iter;
   for (fs::directory_iterator dir_itr(p); dir_itr != end_iter; ++dir_itr) {
     string img_name(dir_itr->path().string());
+    size_t pos = img_name.find(".pb");
+    if(pos != string::npos)
+        continue;
     Mat img = imread(img_name, CV_LOAD_IMAGE_GRAYSCALE);
     vector<KeyPoint> keys =
         (gpu) ? exec_feature_gpu(img, "SURF") : exec_feature(img, detector);
@@ -328,6 +331,7 @@ void build_db(po::variables_map &vm) {
     trainDesc.push_back(desc);
     trainImgs.push_back(img_name);
     save_mat(desc, make_pbdesc(img_name).c_str());
+    cout << "Processed: " << img_name << endl;
   }
 
   // Cluster

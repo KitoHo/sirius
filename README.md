@@ -1,4 +1,4 @@
-# Sirius [![Build Status](https://travis-ci.org/jhauswald/sirius.svg?branch=master)](https://travis-ci.org/jhauswald/sirius)
+# Sirius
 
 Sirius is a speech and vision based intelligent personal assistant. Visit the
 [Sirius website](http://sirius.clarity-lab.org) for additional documentation.
@@ -25,4 +25,3 @@ See [Sirius-suite](http://sirius.clarity-lab.org/sirius-suite) for more informat
 
 [sirius-web](sirius-web) contains a web front-end server to make requests to
 Sirius.  
-See [Sirius-web](http://sirius.clarity-lab.org/sirius-web) for more information.

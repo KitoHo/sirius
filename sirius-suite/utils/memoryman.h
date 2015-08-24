@@ -8,10 +8,21 @@
  *
  */
 
-#if !defined(MEMORYMAN_H_)
-#define MEMORYMAN_H_
+#ifndef MEMORYMAN_H
+#define MEMORYMAN_H
 
-void* sirius_malloc(size_t size);
-void sirius_free(void* ptr);
+#include <stdlib.h>
+#include <stdio.h>
 
-#endif /* MEMORYMAN_H_ */
+inline void* sirius_malloc(size_t size) {
+  void* ret = malloc(size);
+  if (NULL == ret) {
+    fprintf(stderr, "malloc(%lu) failed.\n", size);
+    exit(1);
+  }
+  return ret;
+}
+
+inline void sirius_free(void* ptr) { free(ptr); }
+
+#endif /* MEMORYMAN_H */

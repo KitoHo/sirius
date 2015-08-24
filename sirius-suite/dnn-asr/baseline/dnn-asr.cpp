@@ -23,7 +23,10 @@
 #include <glog/logging.h>
 
 #include "caffe/caffe.hpp"
+
+#include "../../utils/memoryman.h"
 #include "../../utils/timer.h"
+#include "../../utils/memoryman.h"
 
 #define FEATURE_VEC_SIZE 440  // Number of floats in one input feature vector
 #define PROB_VEC_SIZE 1706  // Number of floats in one output probability vector
